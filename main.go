@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
 
-func main(){
-    fmt.Println("Hello world")
+func getRoot(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("got / request\n")
+	io.WriteString(w, "This is my website!\n")
+}
+func getHello(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("got /hello request\n")
+	io.WriteString(w, "Hello, HTTP!\n")
 }
