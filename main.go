@@ -1,18 +1,27 @@
+// main.go
+
 package main
 
 import (
-	"errors"
-	"fmt"
-	"io"
-	"net/http"
-	"os"
+  "log"
+  "net"
+  "net/http"
+  "fmt"
 )
 
-func getRoot(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("got / request\n")
-	io.WriteString(w, "This is my website!\n")
+func Greeting(w http.ResponseWriter, r *http.Request) {
+  fmt.Fprint(w, "Hello World")
 }
-func getHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("got /hello request\n")
-	io.WriteString(w, "Hello, HTTP!\n")
+
+func main() {
+  http.HandleFunc("/greeting", Greeting)
+
+  log.Println("Starting server....")
+
+  listener, err := net.Listen("tcp", "localhost:8080")
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  http.Serve(listener, nil)
 }
