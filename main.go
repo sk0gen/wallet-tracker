@@ -1,27 +1,15 @@
-// main.go
-
 package main
 
 import (
-  "log"
-  "net"
-  "net/http"
-  "fmt"
+	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
-func Greeting(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprint(w, "Hello World")
-}
-
 func main() {
-  http.HandleFunc("/greeting", Greeting)
-
-  log.Println("Starting server....")
-
-  listener, err := net.Listen("tcp", "localhost:8080")
-  if err != nil {
-    log.Fatal(err)
-  }
-
-  http.Serve(listener, nil)
+	e := echo.New()
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, World!")
+	})
+	e.Logger.Fatal(e.Start(":1323"))
 }
