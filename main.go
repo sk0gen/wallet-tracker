@@ -12,10 +12,13 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 
-    e.GET("/test", func (c echo.Context) error {
-        return c.String(http.StatusOK, "API TEST")
-    })
+	e.GET("/test", func(c echo.Context) error {
+		return c.String(http.StatusOK, "API TEST")
+	})
 
+	e.GET("/something-other", func(c echo.Context) error {
+		return c.JSON(http.StatusBadRequest, "")
+	})
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
